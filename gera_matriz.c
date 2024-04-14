@@ -41,7 +41,6 @@ fclose(arquivo);
     printf("\n");
 }*/
 
-//questão 1
 int *VmaiorG  = (int *)malloc(1 * sizeof(int *));
 int maior = 0, cont = 0, p = 0;
 
@@ -97,6 +96,7 @@ for (i = 0; i < tamanho; i++){
 //não tem vértices isolados
 
 //4. Existe um vértice sumidouro?
+ arquivo = fopen("sumidouro.txt", "w");
 for (i = 0; i < tamanho; i++){
     for (j = 0; j < tamanho; j++){
         if (matriz[i][j] == 1){
@@ -104,25 +104,23 @@ for (i = 0; i < tamanho; i++){
         }
     }
     if (cont == (tamanho - 1)){
-        arquivo = fopen("sumidouro.txt", "w");
         fprintf(arquivo, "%i\n", i);
-        fclose(arquivo);
     }
     cont = 0;
 }
+fclose(arquivo);
 //como o vértice com maior grau so tem 1262 graus e o sumidouro teria que ter 2354 não existe sumidouro nesta matriz.
 //mais fica ai o confere de toda forma...
 
 //5. Existe um vértice fonte?
+arquivo = fopen("direçãoacima.txt", "w");
 for (i = 0; i < tamanho; i++){
     for (j = 0; j < tamanho; j++){
         if (matriz[i][j] == 1){
             cont++;
         }
         if (cont == 0 && i == j){
-            arquivo = fopen("direção.txt", "w");
             fprintf(arquivo, "%i\n", i);
-            fclose(arquivo);
             i++;
             j = 0;
             cont = 0;
@@ -131,23 +129,23 @@ for (i = 0; i < tamanho; i++){
     
     cont = 0;
 }//confere se os valores abaixo da diagonal principal são todos 0
+fclose(arquivo);
+arquivo = fopen("direçãoabaixo.txt", "w");
 for (i = 0; i < tamanho; i++){
     for (j = (tamanho-1); j >= 0; j--){
         if (matriz[i][j] == 1){
             cont++;
         }
         if (cont == 0 && i == j){
-            arquivo = fopen("direção.txt", "w");
             fprintf(arquivo, "%i\n", i);
-            fclose(arquivo);
             i++;
             j = (tamanho - 1);
             cont = 0;
         }   
     }
-    
     cont = 0;
 }//confere se os valores acima da diagonal principal são todos 0
+fclose(arquivo);
 //o grafo não é direcional. Logo não se aplica nem a questão 4 nem a 5, mesmo assim fica os confere ai...
 
 //6. Determine o grau de Emissão e Recepção de cada vértice e os coloque em arquivos chamados de "dados_grafos_emissao.txt" e "dados_grafos_recepcao.txt"
@@ -172,6 +170,31 @@ fclose(arquivo);
 
 //9. Apresente o grafo complementar e os represente em um arquivo com o nome "dados_grafo_complementar.txt".
 //não entendi essa, to achando que é para repeitir oq fiz na questão 7 com o arquivo recebendo outro nome...
+
+//10. Apresente um novo arquivo chamado "dados_grafo_gerador.txt" com os vértices múltiplos de 5.
+arquivo = fopen("dados_grafo_gerador.txt", "w");
+for (i = 0; i < tamanho; i++){
+    for (j = 0; j < tamanho; j++){
+        if (matriz[i][j] == 1){
+            cont++;
+        }
+    }
+    if (cont % 5 == 0){ 
+        fprintf(arquivo, "%i com %i vertices\n", i, cont);
+    }   
+    cont = 0;
+}
+ fclose(arquivo);
+
+ //11. Encontre o maior clique do grafo da questão.
+ 
+
+ //12. Verifique se o primeiro e último vértice estão conectados
+ if(matriz[0][tamanho - 1] == 1){
+    printf("o primeiro e ultimo vertice estao conectados\n");
+ }else{
+    printf("o primeiro e ultimo vertice nao estao conectados\n");
+ }// tambem da pra comfeirir com comando gdb print matriz[0][2354] ou matraiz[2354][0], se for igual a 1 entoa estao conectados
 
 return 0;
 }
