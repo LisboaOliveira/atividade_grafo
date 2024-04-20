@@ -1,4 +1,3 @@
-0 com 1205 vertices
 3 com 1190 vertices
 17 com 1220 vertices
 19 com 1175 vertices
